@@ -19,11 +19,17 @@ COPY .mvn .mvn
 COPY mvnw .
 COPY pom.xml .
 
+# Make mvnw executable and fix line endings
+RUN chmod +x ./mvnw && \
+    sed -i 's/\r$//' ./mvnw
+
 RUN ./mvnw dependency:go-offline -B -q
 
 COPY ./src ./src
 
-RUN ./mvnw -DskipTests package -q && \
+# Ensure mvnw is still executable after potential COPY operations
+RUN chmod +x ./mvnw && \
+    ./mvnw -DskipTests package -q && \
     mv /target/ui-0.0.1-SNAPSHOT.jar /app.jar
 
 # Package Stage

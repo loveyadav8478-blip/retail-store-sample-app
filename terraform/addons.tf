@@ -15,11 +15,12 @@ module "eks_addons" {
   # =============================================================================
   # CERT-MANAGER - SSL Certificate Management
   # =============================================================================
-  enable_cert_manager = true
-  cert_manager = {
-    most_recent = true
-    namespace   = "cert-manager"
-  }
+  # Disabled temporarily - will be enabled after ALB controller is ready
+  # enable_cert_manager = false
+  # cert_manager = {
+  #   most_recent = true
+  #   namespace   = "cert-manager"
+  # }
 
   # =============================================================================
   # NGINX INGRESS CONTROLLER - Load Balancing and Routing
@@ -105,6 +106,27 @@ module "eks_addons" {
   #   most_recent = true
   #   namespace   = "kube-system"
   # }
+  enable_aws_load_balancer_controller = true
+
+  aws_load_balancer_controller = {
+    most_recent = true
+    namespace   = "kube-system"
+
+    set = [
+      {
+        name  = "clusterName"
+        value = module.retail_app_eks.cluster_name
+      },
+      {
+        name  = "region"
+        value = var.aws_region
+      },
+      {
+        name  = "vpcId"
+        value = module.vpc.vpc_id
+      }
+    ]
+  }
 
   depends_on = [module.retail_app_eks]
 }
