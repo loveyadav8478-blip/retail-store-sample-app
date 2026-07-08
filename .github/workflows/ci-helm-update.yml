@@ -3,7 +3,7 @@ name: CI - Build & Update Helm Chart
 on:
   push:
     branches:
-      - main
+      - gitops
     paths:
       - 'src/cart/**'
       - 'src/catalog/**'
