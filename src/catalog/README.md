@@ -10,6 +10,7 @@ This service provides an API for retrieving product catalog information. Data is
 
 ## Configuration
 
+
 The following environment variables are available for configuring the service:
 
 | Name                                       | Description                                                     | Default        |
