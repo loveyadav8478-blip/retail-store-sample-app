@@ -2,14 +2,9 @@ name: CI - Build & Update Helm Chart
 
 on:
   push:
-    branches:
-      - gitops
-    paths:
-      - 'src/cart/**'
-      - 'src/catalog/**'
-      - 'src/checkout/**'
-      - 'src/orders/**'
-      - 'src/ui/**'
+    branches: [gitops]
+    paths: ['src/**']
+  workflow_dispatch:
 
 env:
   AWS_REGION: us-east-1
